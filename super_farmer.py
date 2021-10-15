@@ -23,6 +23,10 @@ change_matrix = [
 class Game:
     def __init__(self):
         self.deck = { "KROLIK": 60, "OWCA": 24, "SWINIA": 20, "KROWA": 12, "KON": 6, "MALY_PIES": 4, "DUZY_PIES": 2 }
+        self.green_dice = ["KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","OWCA","OWCA","OWCA","SWINIA","KROWA","WILK"]
+        self.red_dice = ["KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","OWCA","OWCA","OWCA","SWINIA","KON","LIS"]
+        self.curr_pl = 0
+        self.no_of_pl = 0
         
     def change_deck(self, animal, action):
         self.deck[animal] = self.deck[animal] + action 
@@ -30,36 +34,38 @@ class Game:
     def print_deck(self):
         rpl_dict = {"KROLIK": "🐇", "OWCA": "🐏", "SWINIA": "🐖", "KROWA": "🐄", "KON": "🐎", "MALY_PIES": "🐩", "DUZY_PIES": "🦮"}
         return dict((rpl_dict[key], value) for (key, value) in self.deck.items())
-        
 
-# G = Game()
-# G.change_deck("KROLIK", 2)
-# print(G.print_deck())
+
+class Dice:
+    def __init__(self):
+        self.green_dice = ["KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","OWCA","OWCA","OWCA","SWINIA","KROWA","WILK"]
+        self.red_dice = ["KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","OWCA","OWCA","OWCA","SWINIA","KON","LIS"]
+        self.result = collections.Counter([choice(self.green_dice), choice(self.red_dice)])
+
+
+    def print_dice_roll(self):
+        rpl_dict = {"KROLIK": "🐇", "OWCA": "🐏", "SWINIA": "🐖", "KROWA": "🐄", "KON": "🐎", "WILK": "🐺", "LIS": "🦊"}
+        return dict((rpl_dict[key], value) for (key, value) in dict(self.result).items())
+
+    
+d = Dice()
+print(d.result)
 
 
 
 
 class Player:
     def __init__(self, pname):
-        self.player_deck = { "KROLIK": 5, "OWCA": 1, "SWINIA": 1, "KROWA": 0, "KON": 0, "MALY_PIES": 0, "DUZY_PIES": 0 }
+        self.player_deck = { "KROLIK": 0, "OWCA": 0, "SWINIA": 0, "KROWA": 0, "KON": 0, "MALY_PIES": 0, "DUZY_PIES": 0 }
         self.pname = pname
         self.state = False
 
-    def players_draw(self):
-        players_result = dice_roll()
-        return players_result
+    def change_player_deck(self, animal, action):
+        self.player_deck[animal] = self.player_deck[animal] + action
 
-    
-
-def dice_roll():
-    green_dice = ["KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","OWCA","OWCA","OWCA","SWINIA","KROWA","WILK"]
-    red_dice = ["KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","KROLIK","OWCA","OWCA","OWCA","SWINIA","KON","LIS"]
-
-    result = [choice(green_dice), choice(red_dice)]
-
-    return collections.Counter(result)
-
-
+    def print_player_deck(self):
+        rpl_dict = {"KROLIK": "🐇", "OWCA": "🐏", "SWINIA": "🐖", "KROWA": "🐄", "KON": "🐎", "MALY_PIES": "🐩", "DUZY_PIES": "🦮"}
+        return dict((rpl_dict[key], value) for (key, value) in self.player_deck.items()) 
 
 
 
